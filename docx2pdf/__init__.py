@@ -27,7 +27,7 @@ def windows(paths, keep_active):
             doc.Close(0)
     else:
         pbar = tqdm(total=1)
-        docx_filepath = Path(paths["input"]).resolve()
+        docx_filepath = Path(paths["input"]).resolve()  # 절대경로로 바꾸는 함수
         pdf_filepath = Path(paths["output"]).resolve()
         doc = word.Documents.Open(str(docx_filepath))
         doc.SaveAs(str(pdf_filepath), FileFormat=wdFormatPDF)
@@ -72,6 +72,7 @@ def macos(paths, keep_active):
             sys.exit(1)
 
 
+# 경로 설정 
 def resolve_paths(input_path, output_path):
     input_path = Path(input_path).resolve()
     output_path = Path(output_path).resolve() if output_path else None
@@ -98,6 +99,7 @@ def resolve_paths(input_path, output_path):
     return output
 
 
+# OS 구분 (Windows, Mac OS, Microsoft Word 깔려 있어야함)
 def convert(input_path, output_path=None, keep_active=False):
     paths = resolve_paths(input_path, output_path)
     if sys.platform == "darwin":
@@ -110,6 +112,7 @@ def convert(input_path, output_path=None, keep_active=False):
         )
 
 
+# 옵션
 def cli():
 
     import textwrap
